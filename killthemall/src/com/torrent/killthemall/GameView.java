@@ -1,24 +1,74 @@
 package com.torrent.killthemall;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceView;
 
-public class GameView extends View {
+public class GameView extends SurfaceView {
 
 	private Bitmap bmp;
+	private SurfaceHolder holder;
+	private GameLoopThread gameLoopThread;
+	private int x = 0;
+	private int y = 0;
+	private int xSpeed = 10;
+	private int ySpeed = 20;
 
 	public GameView(Context context) {
 		super(context);
+		gameLoopThread = new GameLoopThread(this);
+		holder = getHolder();
+		holder.addCallback(new Callback() {
+			
+			@Override
+			public void surfaceDestroyed(SurfaceHolder holder) {
+				
+				
+			}
+			
+			@SuppressLint("WrongCall")
+			@Override
+			public void surfaceCreated(SurfaceHolder holder) {
+				gameLoopThread.setRunning(true);
+				gameLoopThread.start();
+			}
+			
+			@Override
+			public void surfaceChanged(SurfaceHolder holder, int arg1, int arg2, int arg3) {
+				
+			}
+		});
 		bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 	}
 	
 	protected void onDraw(Canvas canvas){
 		canvas.drawColor(Color.BLACK);
-		canvas.drawBitmap(bmp, 10, 10, null);
+		if(x == getWidth() - bmp.getWidth()){
+			xSpeed = -1;
+		}
+		
+		if(x == 0){
+			xSpeed = 1;
+		}
+		
+		if(y == getHeight() - bmp.getHeight()){
+			ySpeed = -2;
+		}
+		
+		if(y == 0){
+			ySpeed = 1;
+		}
+		
+		x = x + xSpeed;
+		y = y + ySpeed;
+		
+		canvas.drawBitmap(bmp, x, y, null);
 	}
 
 }
