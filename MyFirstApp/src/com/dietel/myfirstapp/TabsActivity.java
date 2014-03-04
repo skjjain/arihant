@@ -22,6 +22,7 @@ public class TabsActivity extends TabActivity {
 		TabSpec tab1 = tabHost.newTabSpec("First Tab");
 		TabSpec tab2 = tabHost.newTabSpec("Second Tab");
 		TabSpec tab3 = tabHost.newTabSpec("Third tab");
+		
 
 		// Set the Tab name and Activity
 		// that will be opened when particular Tab will be selected
