@@ -10,15 +10,17 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 
+@SuppressLint("WrongCall")
 public class GameView extends SurfaceView {
 
 	private Bitmap bmp;
 	private SurfaceHolder holder;
 	private GameLoopThread gameLoopThread;
-	private int x = 0;
-	private int y = 0;
-	private int xSpeed = 10;
-	private int ySpeed = 20;
+//	private int x = 0;
+//	private int y = 0;
+//	private int xSpeed = 10;
+//	private int ySpeed = 20;
+	private Sprite sprite;
 
 	public GameView(Context context) {
 		super(context);
@@ -44,31 +46,13 @@ public class GameView extends SurfaceView {
 				
 			}
 		});
-		bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+		bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bad1);
+		sprite = new Sprite(this, bmp);
 	}
 	
 	protected void onDraw(Canvas canvas){
 		canvas.drawColor(Color.BLACK);
-		if(x == getWidth() - bmp.getWidth()){
-			xSpeed = -1;
-		}
-		
-		if(x == 0){
-			xSpeed = 1;
-		}
-		
-		if(y == getHeight() - bmp.getHeight()){
-			ySpeed = -2;
-		}
-		
-		if(y == 0){
-			ySpeed = 1;
-		}
-		
-		x = x + xSpeed;
-		y = y + ySpeed;
-		
-		canvas.drawBitmap(bmp, x, y, null);
+		sprite.onDraw(canvas);
 	}
 
 }
