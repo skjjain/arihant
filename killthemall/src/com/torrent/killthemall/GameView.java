@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -76,6 +77,16 @@ public class GameView extends SurfaceView {
 		for (Sprite sprite : sprites) {
 			sprite.onDraw(canvas);
 		}
+	}
+	
+	public boolean onTouchEvent(MotionEvent event){
+		for(int i = sprites.size() - 1; i > 0; i --){
+			Sprite sprite = sprites.get(i);
+			if(sprite.isCollision(event.getX(), event.getY())){
+				sprites.remove(sprite);
+			}
+		}
+		return true;
 	}
 
 }

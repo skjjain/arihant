@@ -5,6 +5,8 @@ import java.util.Random;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.MotionEvent;
+import android.view.View.OnTouchListener;
 
 public class Sprite {
 
@@ -83,5 +85,11 @@ public class Sprite {
 		Rect dst = new Rect(x, y, x + width, y + height);
 		canvas.drawBitmap(bmp, src, dst, null);
 	}
+
+	public boolean isCollision(float x2, float y2) {
+		return x2 > x && x2 < x + width && y2 > y && y2 < y + height;
+	}
+	
+
 
 }
