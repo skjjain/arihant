@@ -10,8 +10,8 @@ public class Sprite {
 
 	private static final int BITMAP_COLUMN = 3;
 	private static final int BITMAP_ROWS = 4;
-	private int x = 0;
-	private int y = 0;
+	private int x;
+	private int y;
 	private int height = 0;
 	private int width = 0;
 	private int xSpeed;
@@ -32,8 +32,10 @@ public class Sprite {
 		this.width = bmp.getWidth() / BITMAP_COLUMN;
 		this.height = bmp.getHeight() / BITMAP_ROWS;
 		Random rnd = new Random();
-		ySpeed = rnd.nextInt(10) - 5;
-		xSpeed = rnd.nextInt(10) - 5;
+		x = rnd.nextInt(gameView.getWidth() - width);
+		y = rnd.nextInt(gameView.getHeight() - height);
+		ySpeed = rnd.nextInt(20) - 10;
+		xSpeed = rnd.nextInt(20) - 10;
 	}
 
 	public void update() {

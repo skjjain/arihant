@@ -1,5 +1,8 @@
 package com.torrent.killthemall;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,11 +19,7 @@ public class GameView extends SurfaceView {
 	private Bitmap bmp;
 	private SurfaceHolder holder;
 	private GameLoopThread gameLoopThread;
-//	private int x = 0;
-//	private int y = 0;
-//	private int xSpeed = 10;
-//	private int ySpeed = 20;
-	private Sprite sprite;
+	private List<Sprite> sprites = new ArrayList<Sprite>();
 
 	public GameView(Context context) {
 		super(context);
@@ -37,6 +36,7 @@ public class GameView extends SurfaceView {
 			@SuppressLint("WrongCall")
 			@Override
 			public void surfaceCreated(SurfaceHolder holder) {
+				createSprites();
 				gameLoopThread.setRunning(true);
 				gameLoopThread.start();
 			}
@@ -46,13 +46,36 @@ public class GameView extends SurfaceView {
 				
 			}
 		});
-		bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bad1);
-		sprite = new Sprite(this, bmp);
+		
+
+		
+	}
+	
+	protected void createSprites(){
+		sprites.add(createSprite(R.drawable.bad1));
+		sprites.add(createSprite(R.drawable.bad2));
+		sprites.add(createSprite(R.drawable.bad3));
+		sprites.add(createSprite(R.drawable.bad4));
+		sprites.add(createSprite(R.drawable.bad5));
+		sprites.add(createSprite(R.drawable.bad6));
+		sprites.add(createSprite(R.drawable.good1));
+		sprites.add(createSprite(R.drawable.good2));
+		sprites.add(createSprite(R.drawable.good3));
+		sprites.add(createSprite(R.drawable.good4));
+		sprites.add(createSprite(R.drawable.good5));
+		sprites.add(createSprite(R.drawable.good6));
+	}
+	
+	protected Sprite createSprite(int res){
+		bmp = BitmapFactory.decodeResource(getResources(), res);
+		return new Sprite(this, bmp);
 	}
 	
 	protected void onDraw(Canvas canvas){
-		canvas.drawColor(Color.BLACK);
-		sprite.onDraw(canvas);
+		canvas.drawColor(Color.MAGENTA);
+		for (Sprite sprite : sprites) {
+			sprite.onDraw(canvas);
+		}
 	}
 
 }
