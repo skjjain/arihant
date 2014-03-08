@@ -2,12 +2,15 @@ package com.torrent.killthemall;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -23,6 +26,9 @@ public class GameView extends SurfaceView {
 	private long lastClickTime;
 	private Bitmap bmpBlood;
 	private List<TempSprite> temps = new ArrayList<TempSprite>();
+	private Bitmap bmpBgGrass;
+	private SoundPool sounds;
+	private int sExplosion;
 
 	public GameView(Context context) {
 		super(context);
@@ -50,7 +56,13 @@ public class GameView extends SurfaceView {
 			}
 		});
 
-		bmpBlood = BitmapFactory.decodeResource(getResources(), R.drawable.blood1);
+		bmpBlood = BitmapFactory.decodeResource(getResources(),
+				R.drawable.blood1);
+		bmpBgGrass = BitmapFactory.decodeResource(getResources(),
+				R.drawable.grass_texture);
+
+		sounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		sExplosion = sounds.load(context, R.raw.hit_hurt, 1);
 	}
 
 	protected void createSprites() {
@@ -74,7 +86,9 @@ public class GameView extends SurfaceView {
 	}
 
 	protected void onDraw(Canvas canvas) {
-		canvas.drawColor(Color.LTGRAY);
+		Rect src = new Rect(0, 0, this.getWidth(), this.getHeight());
+		Rect dst = new Rect(0, 0, this.getWidth(), this.getHeight());
+		canvas.drawBitmap(bmpBgGrass, src, dst, null);
 		for (int i = temps.size() - 1; i >= 0; i--) {
 			temps.get(i).onDraw(canvas);
 		}
@@ -93,6 +107,7 @@ public class GameView extends SurfaceView {
 					Sprite sprite = sprites.get(i);
 					if (sprite.isCollision(x, y)) {
 						sprites.remove(sprite);
+						sounds.play(sExplosion, 1.0f, 1.0f, 0, 0, 1.5f);
 						temps.add(new TempSprite(temps, this, x, y, bmpBlood));
 					}
 				}
