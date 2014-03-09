@@ -25,8 +25,10 @@ public class Sprite {
 	private int DOWN = 0;
 	private int LEFT = 1;
 	private int RIGHT = 2;
+	private String type;
 
-	public Sprite(GameView gameView, Bitmap bmp) {
+	public Sprite(GameView gameView, Bitmap bmp, String type) {
+		this.type = type;
 		this.gameView = gameView;
 		this.bmp = bmp;
 		this.width = bmp.getWidth() / BITMAP_COLUMN;
@@ -88,6 +90,9 @@ public class Sprite {
 		return x2 > x && x2 < x + width && y2 > y && y2 < y + height;
 	}
 	
+	public boolean isGood(){
+		return this.type.equalsIgnoreCase("good");
+	}
 
 
 }
