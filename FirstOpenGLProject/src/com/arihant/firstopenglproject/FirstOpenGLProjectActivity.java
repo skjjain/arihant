@@ -1,70 +1,35 @@
 package com.arihant.firstopenglproject;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
-import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
-public class FirstOpenGLProjectActivity extends Activity {
-	/**
-	 * Hold a reference to our GLSurfaceView
-	 */
-	private GLSurfaceView glSurfaceView;
-	private boolean rendererSet = false;
+public class FirstOpenGLProjectActivity extends Activity{
 
+	GLSurfaceView ourSurface;
+	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		glSurfaceView = new GLSurfaceView(this);
-		// Check if the system supports OpenGL ES 2.0.
-		if (supportsES2()) {
-			// Request an OpenGL ES 2.0 compatible context.
-			glSurfaceView.setEGLContextClientVersion(2);
-			// Assign our renderer.
-			glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-			glSurfaceView.setRenderer(new FirstOpenGLProjectRenderer());
-			rendererSet = true;
-		} else {
-			Toast.makeText(this, "This device does not support OpenGL ES 2.0.",
-					Toast.LENGTH_LONG).show();
-			return;
-		}
-
-		setContentView(glSurfaceView);
+		ourSurface = new GLSurfaceView(this);
+		ourSurface.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+		ourSurface.setRenderer(new FirstOpenGLProjectRenderer());
+		setContentView(ourSurface);
 	}
 
 	@Override
 	protected void onPause() {
+		// TODO Auto-generated method stub
 		super.onPause();
-
-		if (rendererSet) {
-			glSurfaceView.onPause();
-		}
+		ourSurface.onPause();
 	}
 
 	@Override
 	protected void onResume() {
+		// TODO Auto-generated method stub
 		super.onResume();
+		ourSurface.onResume();
+	}
 
-		if (rendererSet) {
-			glSurfaceView.onResume();
-		}
-	}
-	
-	private boolean supportsES2() {
-		final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-		final ConfigurationInfo configurationInfo = activityManager
-				.getDeviceConfigurationInfo();
-		return configurationInfo.reqGlEsVersion >= 0x20000
-				|| (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1 && (Build.FINGERPRINT
-						.startsWith("generic")
-						|| Build.FINGERPRINT.startsWith("unknown")
-						|| Build.MODEL.contains("google_sdk")
-						|| Build.MODEL.contains("Emulator") || Build.MODEL
-							.contains("Android SDK built for x86")));
-	}
 }

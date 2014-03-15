@@ -1,56 +1,46 @@
-/***
- * Excerpted from "OpenGL ES for Android",
- * published by The Pragmatic Bookshelf.
- * Copyrights apply to this code. It may not be used to create training material, 
- * courses, books, articles, and the like. Contact us if you are in doubt.
- * We make no guarantees that this code is fit for any purpose. 
- * Visit http://www.pragmaticprogrammer.com/titles/kbogla for more book information.
-***/
 package com.arihant.firstopenglproject;
-
-import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
-import static android.opengl.GLES20.glClear;
-import static android.opengl.GLES20.glClearColor;
-import static android.opengl.GLES20.glViewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView.Renderer;
+import android.opengl.GLU;
+import android.os.SystemClock;
 
 public class FirstOpenGLProjectRenderer implements Renderer {
-    @Override
-    public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
-        // Set the background clear color to red. The first component is
-        // red, the second is green, the third is blue, and the last
-        // component is alpha, which we don't use in this lesson.
-        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-    }
 
-    /**
-     * onSurfaceChanged is called whenever the surface has changed. This is
-     * called at least once when the surface is initialized. Keep in mind that
-     * Android normally restarts an Activity on rotation, and in that case, the
-     * renderer will be destroyed and a new one created.
-     * 
-     * @param width
-     *            The new width, in pixels.
-     * @param height
-     *            The new height, in pixels.
-     */
-    @Override
-    public void onSurfaceChanged(GL10 glUnused, int width, int height) {
-        // Set the OpenGL viewport to fill the entire surface.
-        glViewport(0, 0, width, height);
-    }
+	private FirstOpenGLTriangle tri;
+	private float eyeX = 0;
 
-    /**
-     * OnDrawFrame is called whenever a new frame needs to be drawn. Normally,
-     * this is done at the refresh rate of the screen.
-     */
-    @Override
-    public void onDrawFrame(GL10 glUnused) {
-        // Clear the rendering surface.
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
+	public FirstOpenGLProjectRenderer() {
+		tri = new FirstOpenGLTriangle();
+	}
+
+	public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
+		gl.glDisable(GL10.GL_DITHER);
+		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
+		gl.glClearColor(.8f, 0f, .2f, 1f);
+		gl.glClearDepthf(1f);
+	}
+
+	public void onDrawFrame(GL10 gl) {
+		gl.glDisable(GL10.GL_DITHER);
+		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		gl.glMatrixMode(GL10.GL_MODELVIEW);
+		gl.glLoadIdentity();
+		eyeX += .001;
+		GLU.gluLookAt(gl, eyeX, 0, -5, 0, 0, 0, 20, 30, 20);
+		long time = SystemClock.uptimeMillis() % 4000L;
+		float angle = .090f * ((int) time);
+		gl.glRotatef(angle, 0, 0, 1);
+		tri.draw(gl);
+	}
+
+	public void onSurfaceChanged(GL10 gl, int width, int height) {
+		gl.glViewport(0, 0, width, height);
+		float ratio = (float) width / height;
+		gl.glMatrixMode(GL10.GL_PROJECTION);
+		gl.glLoadIdentity();
+		gl.glFrustumf(-ratio, ratio, -1, 1, 1, 250);
+	}
 }
