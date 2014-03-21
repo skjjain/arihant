@@ -34,9 +34,9 @@ public class GameActivity extends BaseGameActivity {
 
 	@Override
 	public void onCreateResources(
-			OnCreateResourcesCallback pOnCreateResourcesCallback)
+			OnCreateResourcesCallback cb)
 			throws Exception {
-		// TODO Auto-generated method stub
+		ResourceManager.prepareManager(this.getEngine(), this, camera, getVertexBufferObjectManager());
 		
 	}
 
