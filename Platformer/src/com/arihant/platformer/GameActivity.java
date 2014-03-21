@@ -9,9 +9,10 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import com.arihant.platformer.scenes.SceneManager;
-
+import android.view.KeyEvent;
 import android.widget.Toast;
+
+import com.arihant.platformer.scenes.SceneManager;
 
 public class GameActivity extends BaseGameActivity {
 
@@ -54,5 +55,20 @@ public class GameActivity extends BaseGameActivity {
 		cb.onPopulateSceneFinished();
 		
 	}
+	
+	@Override
+	protected void onDestroy(){
+		super.onDestroy();
+		System.exit(0);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			SceneManager.getInstance().getCurrentScene().onBackPressed();
+		}
+		return false;
+	}
+	
 
 }

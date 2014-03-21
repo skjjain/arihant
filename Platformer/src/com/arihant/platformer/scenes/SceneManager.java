@@ -22,7 +22,7 @@ public class SceneManager {
 	
 	public void setMenuScene(OnCreateSceneCallback cb){
 		ResourceManager.getInstance().loadMenuResources();
-		menuScene = new MenuScene();
+		menuScene = new MainMenuScene();
 		setScene(menuScene);
 		currentScene.createScene();
 		cb.onCreateSceneFinished(currentScene);
