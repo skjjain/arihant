@@ -27,7 +27,7 @@ public class GameActivity extends BaseGameActivity {
 		engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		if(!MultiTouch.isSupported(this)){
-			Toast.makeText(this, "Sorry your device does not support multitouch!", Toast.LENGTH_LONG);
+			Toast.makeText(this, "Sorry your device does not support multitouch!", Toast.LENGTH_LONG).show();
 		}
 		return engineOptions;
 	}
