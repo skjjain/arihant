@@ -1,0 +1,51 @@
+package com.arihant.platformer;
+
+import org.andengine.engine.Engine;
+import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
+
+public class ResourceManager {
+
+	private static final ResourceManager INSTANCE = new ResourceManager();
+
+	public Engine engine;
+	public GameActivity activity;
+	public Camera camera;
+	public VertexBufferObjectManager vbom;
+	
+	private BuildableBitmapTextureAtlas menuTextureAtlas;
+	public ITextureRegion play_button_region;
+	public ITextureRegion exit_button_region;
+
+	public void loadMenuResources() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+		play_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play-button.png") ;
+		exit_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "exit-button.png");
+	}
+
+	public void loadGameResources() {
+
+	}
+
+	public void loadFonts() {
+
+	}
+
+	public static void prepareManager(Engine engine, GameActivity activity,
+			Camera camera, VertexBufferObjectManager vbom) {
+		getInstance().engine = engine;
+		getInstance().activity = activity;
+		getInstance().camera = camera;
+		getInstance().vbom = vbom;
+	}
+
+	public static ResourceManager getInstance() {
+		return INSTANCE;
+	}
+
+}

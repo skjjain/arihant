@@ -9,6 +9,8 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import com.arihant.platformer.scenes.SceneManager;
+
 import android.widget.Toast;
 
 public class GameActivity extends BaseGameActivity {
@@ -37,20 +39,19 @@ public class GameActivity extends BaseGameActivity {
 			OnCreateResourcesCallback cb)
 			throws Exception {
 		ResourceManager.prepareManager(this.getEngine(), this, camera, getVertexBufferObjectManager());
-		ResourceManager.getInstance().loadMenuResources();
+		cb.onCreateResourcesFinished();
 	}
 
 	@Override
-	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
+	public void onCreateScene(OnCreateSceneCallback cb)
 			throws Exception {
-		// TODO Auto-generated method stub
-		
+		SceneManager.getInstance().setMenuScene(cb);
 	}
 
 	@Override
 	public void onPopulateScene(Scene pScene,
-			OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
-		// TODO Auto-generated method stub
+			OnPopulateSceneCallback cb) throws Exception {
+		cb.onPopulateSceneFinished();
 		
 	}
 
