@@ -54,7 +54,7 @@ public class MainMenuScene extends BaseScene implements
 
 	@Override
 	public void disposeScene() {
-
+		ResourceManager.getInstance().unloadMenuResources();
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class MainMenuScene extends BaseScene implements
 			float localX, float localY) {
 		switch (item.getID()) {
 		case MENU_PLAY:
-
+			SceneManager.getInstance().setGameScene();
 			return true;
 		case MENU_EXIT:
 			System.exit(0);
