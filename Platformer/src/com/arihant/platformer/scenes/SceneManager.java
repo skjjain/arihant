@@ -21,6 +21,7 @@ public class SceneManager {
 	
 	public void setGameScene(){
 		ResourceManager.getInstance().loadGameResources();
+		ResourceManager.getInstance().loadTileResources();
 		gameScene = new GameScene();
 		setScene(gameScene);
 		currentScene.createScene();

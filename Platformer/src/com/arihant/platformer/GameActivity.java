@@ -40,6 +40,7 @@ public class GameActivity extends BaseGameActivity {
 			OnCreateResourcesCallback cb)
 			throws Exception {
 		ResourceManager.prepareManager(this.getEngine(), this, camera, getVertexBufferObjectManager());
+		ResourceManager.getInstance().loadTileManager();
 		cb.onCreateResourcesFinished();
 	}
 
