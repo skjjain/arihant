@@ -32,6 +32,7 @@ public class ResourceManager {
 	
 	public ITextureRegion control_knob_region;
 	public ITextureRegion control_base_region;
+	public ITextureRegion control_jump_region;
 	
 
 	private BuildableBitmapTextureAtlas tileTextureAtlas;
@@ -74,6 +75,9 @@ public class ResourceManager {
 		
 		control_base_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameTextureAtlas, activity, "control_base.png");
+		
+		control_jump_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				gameTextureAtlas, activity, "control-jump.png");
 		
 		control_knob_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameTextureAtlas, activity, "control_knob.png");

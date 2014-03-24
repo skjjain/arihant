@@ -2,6 +2,7 @@ package com.arihant.platformer.scenes;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl.IOnScreenControlListener;
@@ -11,12 +12,15 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.util.GLState;
 import org.andengine.util.color.Color;
 
 import android.hardware.SensorManager;
 
 import com.arihant.platformer.ResourceManager;
 import com.arihant.platformer.physicsworld.MaxStepPhysicsWorld;
+import com.arihant.platformer.tiles.Tile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -47,6 +51,7 @@ public class GameScene extends BaseScene {
 
 	private void createHUD() {
 		gameHUD = new HUD();
+		createJumpControls();
 		camera.setHUD(gameHUD);
 	}
 
@@ -56,17 +61,24 @@ public class GameScene extends BaseScene {
 	
 	
 	private void addPlayer(){
-		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(0.5f,  0.0f, 0.75f);
-		Sprite playerSprite = createSprite(0, -100, ResourceManager.getInstance().player_region, vbom);
+		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(0.5f,  0.4f, 0.75f);
+		Sprite playerSprite = createSprite(0, 0, ResourceManager.getInstance().player_region, vbom);
 		playerBody = PhysicsFactory.createBoxBody(physicsWorld, playerSprite, BodyType.DynamicBody, playerFixtureDef);
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(playerSprite, playerBody, true, false));
 		attachChild(playerSprite);
 	}
 	
 	private void createTiles(){
-		ResourceManager.getInstance().tileManager.getTileById(1).getInstance(-50, 100).createBodyAndAttach(this, physicsWorld);
-		ResourceManager.getInstance().tileManager.getTileById(1).getInstance(50, 100).createBodyAndAttach(this, physicsWorld);
-		ResourceManager.getInstance().tileManager.getTileById(2).getInstance(100, -50).createBodyAndAttach(this, physicsWorld);
+		Tile tile = ResourceManager.getInstance().tileManager.getTileById(2);
+		final float heigtOfTile = tile.getHeight();
+		final float widthOfTile = tile.getHeight();
+		
+		float startingX = 0;
+		while(startingX < camera.getWidth()){
+			tile.getInstance(startingX, camera.getHeight() - heigtOfTile).createBodyAndAttach(this, physicsWorld);
+			startingX += widthOfTile;
+		}
+		
 	}
 
 	@Override
@@ -105,6 +117,28 @@ public class GameScene extends BaseScene {
 		control.refreshControlKnobPosition();
 		setChildScene(control);
 
+	}
+	
+	private void createJumpControls(){
+		Sprite jump = new Sprite(camera.getWidth() -  175, camera.getHeight() - 125, ResourceManager.getInstance().control_jump_region, vbom){
+			@Override
+			public boolean onAreaTouched(final TouchEvent event, final float x, final float y){
+				if(event.isActionUp()){
+					playerBody.applyLinearImpulse(new Vector2(0, -15), playerBody.getPosition());
+				}
+				return true;
+			}
+			
+			
+			@Override
+			protected void preDraw(GLState glState, Camera camera) {
+				super.preDraw(glState, camera);
+				glState.enableDither();
+			}
+			
+		};
+		gameHUD.registerTouchArea(jump);
+		gameHUD.attachChild(jump);
 	}
 
 }
