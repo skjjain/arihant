@@ -19,6 +19,7 @@ import org.andengine.util.color.Color;
 import android.hardware.SensorManager;
 
 import com.arihant.platformer.ResourceManager;
+import com.arihant.platformer.level.LevelManager;
 import com.arihant.platformer.physicsworld.MaxStepPhysicsWorld;
 import com.arihant.platformer.tiles.Tile;
 import com.badlogic.gdx.math.Vector2;
@@ -32,15 +33,18 @@ public class GameScene extends BaseScene {
 	private PhysicsWorld physicsWorld;
 	private Body playerBody;
 	private Sprite playerSprite;
+	private LevelManager levelManager;
+	private boolean USE_LEVEL_MANAGER = false;
 
 	@Override
 	public void createScene() {
+		levelManager = new LevelManager(activity.getAssets());
 		setBackground();
 		createHUD();
 		createControls();
 		createPhysics();
 		addPlayer();
-		createTiles();
+		createLevel();
 		camera.setChaseEntity(playerSprite);
 	}
 
@@ -68,17 +72,22 @@ public class GameScene extends BaseScene {
 		attachChild(playerSprite);
 	}
 	
-	private void createTiles(){
-		Tile tile = ResourceManager.getInstance().tileManager.getTileById(2);
-		final float heigtOfTile = tile.getHeight();
-		final float widthOfTile = tile.getHeight();
-		
-		float startingX = 0;
-		while(startingX < camera.getWidth()){
-			tile.getInstance(startingX, camera.getHeight() - heigtOfTile).createBodyAndAttach(this, physicsWorld);
-			startingX += widthOfTile;
+	private void createLevel() {
+		if (USE_LEVEL_MANAGER ) {
+			levelManager.loadLevel(1, this, physicsWorld);
+		} else {
+			Tile tile = ResourceManager.getInstance().tileManager
+					.getTileById(2);
+			final float heigtOfTile = tile.getHeight();
+			final float widthOfTile = tile.getHeight();
+
+			float startingX = 0;
+			while (startingX < camera.getWidth()) {
+				tile.getInstance(startingX, camera.getHeight() - heigtOfTile)
+						.createBodyAndAttach(this, physicsWorld);
+				startingX += widthOfTile;
+			}
 		}
-		
 	}
 
 	@Override
