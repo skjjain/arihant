@@ -17,10 +17,6 @@ import com.arihant.platformer.scenes.SceneManager;
 public class GameActivity extends BaseGameActivity {
 
 	private Camera camera;
-	
-	public GameActivity() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	public EngineOptions onCreateEngineOptions() {

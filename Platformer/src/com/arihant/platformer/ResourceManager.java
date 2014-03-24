@@ -9,6 +9,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
 
@@ -40,6 +41,12 @@ public class ResourceManager {
 	public ITextureRegion grass_platform_region;
 
 	public TileManager tileManager;
+
+	private BitmapTextureAtlas mAutoParallaxBackgroundTexture;
+
+	public TextureRegion mParallaxLayerFront;
+	public TextureRegion mParallaxLayerBack;
+	public TextureRegion mParallaxLayerMid;
 
 	public void loadMenuResources() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
@@ -83,7 +90,13 @@ public class ResourceManager {
 				gameTextureAtlas, activity, "control_knob.png");
 		
 		player_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-				gameTextureAtlas, activity, "player.png");
+				gameTextureAtlas, activity, "toy_car.png");
+		
+		mAutoParallaxBackgroundTexture = new BitmapTextureAtlas(activity.getTextureManager(), 1024, 1024);
+		mParallaxLayerFront = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mAutoParallaxBackgroundTexture, activity, "parallax_background_layer_front.png", 0, 0);
+		mParallaxLayerBack = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mAutoParallaxBackgroundTexture, activity, "parallax_background_layer_back.png", 0, 188);
+		mParallaxLayerMid = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mAutoParallaxBackgroundTexture, activity, "parallax_background_layer_mid.png", 0, 669);
+		mAutoParallaxBackgroundTexture.load();
 
 		try {
 			gameTextureAtlas

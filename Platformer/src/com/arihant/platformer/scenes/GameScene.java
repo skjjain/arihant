@@ -7,14 +7,14 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl.IOnScreenControlListener;
 import org.andengine.engine.camera.hud.controls.DigitalOnScreenControl;
-import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.AutoParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.util.GLState;
-import org.andengine.util.color.Color;
 
 import android.hardware.SensorManager;
 
@@ -60,12 +60,16 @@ public class GameScene extends BaseScene {
 	}
 
 	private void setBackground() {
-		setBackground(new Background(Color.WHITE));
+		final AutoParallaxBackground autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 5);
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, camera.getHeight() - ResourceManager.getInstance().mParallaxLayerBack.getHeight(), ResourceManager.getInstance().mParallaxLayerBack, vbom)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-5.0f, new Sprite(0, 80, ResourceManager.getInstance().mParallaxLayerMid, vbom)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-10.0f, new Sprite(0, camera.getHeight() - ResourceManager.getInstance().mParallaxLayerFront.getHeight(), ResourceManager.getInstance().mParallaxLayerFront, vbom)));
+		setBackground(autoParallaxBackground);
 	}
 	
 	
 	private void addPlayer(){
-		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(0.5f,  0.4f, 0.75f);
+		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(0.9f,  0.01f, 0.75f);
 		Sprite playerSprite = createSprite(0, 0, ResourceManager.getInstance().player_region, vbom);
 		playerBody = PhysicsFactory.createBoxBody(physicsWorld, playerSprite, BodyType.DynamicBody, playerFixtureDef);
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(playerSprite, playerBody, true, false));
@@ -133,7 +137,7 @@ public class GameScene extends BaseScene {
 			@Override
 			public boolean onAreaTouched(final TouchEvent event, final float x, final float y){
 				if(event.isActionUp()){
-					playerBody.applyLinearImpulse(new Vector2(0, -15), playerBody.getPosition());
+					playerBody.applyLinearImpulse(new Vector2(0, -200), playerBody.getPosition());
 				}
 				return true;
 			}
