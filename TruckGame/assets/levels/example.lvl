@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<level width="800" height="320">
+	<tile x="0" y="350" tile="1" />
+	<tile x="200" y="300" tile="1" />
+	<tile x="300" y="200" tile="1" />
+	<tile x="500" y="100" tile="1" />
+</level>
