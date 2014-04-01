@@ -24,7 +24,6 @@ public class GameActivity extends BaseGameActivity {
 		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(800, 480), camera);
 		engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
 		engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
-		//engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		if(!MultiTouch.isSupported(this)){
 			Toast.makeText(this, "Sorry your device does not support multitouch!", Toast.LENGTH_LONG).show();
 		}
@@ -36,7 +35,6 @@ public class GameActivity extends BaseGameActivity {
 			OnCreateResourcesCallback cb)
 			throws Exception {
 		ResourceManager.prepareManager(this.getEngine(), this, camera, getVertexBufferObjectManager());
-		ResourceManager.getInstance().loadTileManager();
 		cb.onCreateResourcesFinished();
 	}
 

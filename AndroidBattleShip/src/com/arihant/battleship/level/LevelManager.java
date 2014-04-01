@@ -65,8 +65,8 @@ public class LevelManager {
 						TAG_TILE_ATTR_Y);
 				final int id = SAXUtils.getIntAttributeOrThrow(attr,
 						TAG_TILE_ATTR_TILE);
-				Tile t = ResourceManager.getInstance().tileManager.getTileById(id);
-				level.addTile(t.getInstance(x, y));
+//				Tile t = ResourceManager.getInstance().tileManager.getTileById(id);
+//				level.addTile(t.getInstance(x, y));
 				return null;
 			}
 		});
