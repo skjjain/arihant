@@ -51,7 +51,7 @@ public abstract class BaseScene extends Scene{
 				
 				switch (pSceneTouchEvent.getAction()) {
 				case TouchEvent.ACTION_UP:
-					this.setRotation(this.getRotation() + 45);
+					//this.setRotation(this.getRotation() + 45);
 					break;
 				case TouchEvent.ACTION_MOVE:
 					this.setPosition(pSceneTouchEvent.getX() - this.getWidth()

@@ -16,12 +16,15 @@ import org.andengine.util.debug.Debug;
 
 import android.graphics.Typeface;
 
+import com.arihant.battleship.base.GameModel;
+
 public class ResourceManager {
 
 	private static final ResourceManager INSTANCE = new ResourceManager();
 
 	public Engine engine;
 	public GameActivity activity;
+	public GameModel model;
 	public Camera camera;
 	public VertexBufferObjectManager vbom;
 
@@ -33,6 +36,8 @@ public class ResourceManager {
 	public ITextureRegion shipRegion;
 
 	public Font mFont;
+
+	public ITextureRegion backgroundRegion;
 	
 
 	public void loadMenuResources() {
@@ -61,11 +66,17 @@ public class ResourceManager {
 	}
 
 	public void loadGameResources() {
+		
+		
+		
 		gameTextureAtlas = new BuildableBitmapTextureAtlas(
 				activity.getTextureManager(), 1024, 1024,
 				TextureOptions.BILINEAR);
 		shipRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-				gameTextureAtlas, activity, "Ship.png");
+				gameTextureAtlas, activity, "broklyn.png");
+		
+		backgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				gameTextureAtlas, activity, "background.jpg");
 
 		this.mFont = FontFactory.create(activity.getFontManager(), activity.getTextureManager(), 256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
 		this.mFont.load();
@@ -97,6 +108,7 @@ public class ResourceManager {
 		getInstance().activity = activity;
 		getInstance().camera = camera;
 		getInstance().vbom = vbom;
+		getInstance().model = new GameModel();
 	}
 
 	public static ResourceManager getInstance() {
