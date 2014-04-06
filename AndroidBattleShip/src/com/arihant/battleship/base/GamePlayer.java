@@ -1,5 +1,10 @@
 package com.arihant.battleship.base;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.andengine.entity.sprite.Sprite;
+
 public class GamePlayer {
 
 	private String name;
@@ -8,7 +13,17 @@ public class GamePlayer {
 	private float regionWidth;
 	private float regionHeight;
 	
+	private Sprite currentShip;
+	private Map<String, Sprite> ships = new HashMap<String, Sprite>();
 	
+
+	public Sprite getCurrentShip() {
+		return currentShip;
+	}
+
+	public void setCurrentShip(Sprite currentShip) {
+		this.currentShip = currentShip;
+	}
 
 	public GamePlayer(String name, float regionX, float regionY,
 			float regionWidth, float regionHeight) {
@@ -57,6 +72,14 @@ public class GamePlayer {
 
 	public void setRegionHeight(float regionHeight) {
 		this.regionHeight = regionHeight;
+	}
+
+	public void addShip(String name , Sprite playerSprite) {
+		this.ships.put(name, playerSprite);
+	}
+
+	public Map<String, Sprite> getShips() {
+		return this.ships;
 	}
 
 }

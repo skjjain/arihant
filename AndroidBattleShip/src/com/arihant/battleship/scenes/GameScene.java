@@ -75,87 +75,97 @@ public class GameScene extends BaseScene {
 	}
 
 	private void addPlayer() {
-		
 		float playerRegionY = ResourceManager.getInstance().model.getPlayer().getRegionY();
-//		float playerRegionHeight = ResourceManager.getInstance().model.getPlayer().getRegionHeight();
-		
 		float shipSpacing = 40;
 		
-		Sprite playerSpriteBlue = createDragableSprite(0, playerRegionY + shipSpacing * 1,
+		Sprite playerSpriteBlue = createPlayerSprite(0, playerRegionY + shipSpacing * 1,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteBlue.setColor(new Color(Color.BLUE));
 		registerTouchArea(playerSpriteBlue);
 		attachChild(playerSpriteBlue);
+		
+		ResourceManager.getInstance().model.getPlayer().addShip("Blue", playerSpriteBlue);
 
-		Sprite playerSpriteRed = createDragableSprite(0, playerRegionY + shipSpacing * 2,
+		Sprite playerSpriteRed = createPlayerSprite(0, playerRegionY + shipSpacing * 2,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteRed.setColor(new Color(Color.RED));
 		playerSpriteRed.setScale(0.75f);
 		registerTouchArea(playerSpriteRed);
 		attachChild(playerSpriteRed);
 		
-		Sprite playerSpriteYellow = createDragableSprite(0, playerRegionY + shipSpacing * 3,
+		ResourceManager.getInstance().model.getPlayer().addShip("Red", playerSpriteRed);
+		
+		Sprite playerSpriteYellow = createPlayerSprite(0, playerRegionY + shipSpacing * 3,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteYellow.setColor(new Color(Color.YELLOW));
 		playerSpriteYellow.setScale(0.55f);
 		registerTouchArea(playerSpriteYellow);
 		attachChild(playerSpriteYellow);
 		
-		Sprite playerSpriteGreen = createDragableSprite(0, playerRegionY + shipSpacing * 4,
+		ResourceManager.getInstance().model.getPlayer().addShip("Yellow", playerSpriteYellow);
+		
+		Sprite playerSpriteGreen = createPlayerSprite(0, playerRegionY + shipSpacing * 4,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteGreen.setColor(new Color(Color.GREEN));
 		playerSpriteGreen.setScale(0.55f);
 		registerTouchArea(playerSpriteGreen);
 		attachChild(playerSpriteGreen);
 		
-		Sprite playerSpriteWhite = createDragableSprite(0, playerRegionY + shipSpacing * 5,
+		ResourceManager.getInstance().model.getPlayer().addShip("Green", playerSpriteGreen);
+		
+		Sprite playerSpriteWhite = createPlayerSprite(0, playerRegionY + shipSpacing * 5,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteWhite.setColor(new Color(Color.WHITE));
 		playerSpriteWhite.setScale(0.45f);
 		registerTouchArea(playerSpriteWhite);
 		attachChild(playerSpriteWhite);
+		
+		ResourceManager.getInstance().model.getPlayer().addShip("White", playerSpriteWhite);
 	}
 	
 	private void addComputer() {
-		
-		float playerRegionY = ResourceManager.getInstance().model.getPlayer().getRegionY();
-//		float playerRegionHeight = ResourceManager.getInstance().model.getPlayer().getRegionHeight();
-		
+		float computerRegionY = ResourceManager.getInstance().model.getComputer().getRegionY();
+		float computerRegionX = ResourceManager.getInstance().model.getComputer().getRegionX() + 255;
 		float shipSpacing = 40;
 		
-		Sprite playerSpriteBlue = createDragableSprite(0, playerRegionY + shipSpacing * 1,
+		Sprite playerSpriteBlue = createSprite(computerRegionX, computerRegionY + shipSpacing * 1,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteBlue.setColor(new Color(Color.BLUE));
-		registerTouchArea(playerSpriteBlue);
+		playerSpriteBlue.setFlippedHorizontal(true);
 		attachChild(playerSpriteBlue);
+		ResourceManager.getInstance().model.getComputer().addShip("Blue", playerSpriteBlue);
 
-		Sprite playerSpriteRed = createDragableSprite(0, playerRegionY + shipSpacing * 2,
+		Sprite playerSpriteRed = createSprite(computerRegionX, computerRegionY + shipSpacing * 2,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteRed.setColor(new Color(Color.RED));
 		playerSpriteRed.setScale(0.75f);
-		registerTouchArea(playerSpriteRed);
+		playerSpriteRed.setFlippedHorizontal(true);
 		attachChild(playerSpriteRed);
+		ResourceManager.getInstance().model.getComputer().addShip("Red", playerSpriteRed);
 		
-		Sprite playerSpriteYellow = createDragableSprite(0, playerRegionY + shipSpacing * 3,
+		Sprite playerSpriteYellow = createSprite(computerRegionX, computerRegionY + shipSpacing * 3,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteYellow.setColor(new Color(Color.YELLOW));
 		playerSpriteYellow.setScale(0.55f);
-		registerTouchArea(playerSpriteYellow);
+		playerSpriteYellow.setFlippedHorizontal(true);
 		attachChild(playerSpriteYellow);
+		ResourceManager.getInstance().model.getComputer().addShip("Yellow", playerSpriteYellow);
 		
-		Sprite playerSpriteGreen = createDragableSprite(0, playerRegionY + shipSpacing * 4,
+		Sprite playerSpriteGreen = createSprite(computerRegionX, computerRegionY + shipSpacing * 4,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteGreen.setColor(new Color(Color.GREEN));
 		playerSpriteGreen.setScale(0.55f);
-		registerTouchArea(playerSpriteGreen);
+		playerSpriteGreen.setFlippedHorizontal(true);
 		attachChild(playerSpriteGreen);
+		ResourceManager.getInstance().model.getComputer().addShip("Green", playerSpriteGreen);
 		
-		Sprite playerSpriteWhite = createDragableSprite(0, playerRegionY + shipSpacing * 5,
+		Sprite playerSpriteWhite = createSprite(computerRegionX, computerRegionY + shipSpacing * 5,
 				ResourceManager.getInstance().shipRegion, vbom);
 		playerSpriteWhite.setColor(new Color(Color.WHITE));
 		playerSpriteWhite.setScale(0.45f);
-		registerTouchArea(playerSpriteWhite);
+		playerSpriteWhite.setFlippedHorizontal(true);
 		attachChild(playerSpriteWhite);
+		ResourceManager.getInstance().model.getComputer().addShip("White", playerSpriteWhite);
 	}
 
 	@Override
